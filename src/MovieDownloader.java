@@ -7,7 +7,7 @@ public class MovieDownloader {
 
     private APowerState currentPowerState;
     private PowerStateOff powerStateOff;
-    private PowerStateOn powerStateOn;
+    private PowerStateOnMachine powerStateOnMachine;
 
     private ANetworkState currentNetworkState;
     private NetworkStateOff networkStateOff;
