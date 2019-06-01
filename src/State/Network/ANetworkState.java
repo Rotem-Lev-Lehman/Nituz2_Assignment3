@@ -11,6 +11,11 @@ public abstract class ANetworkState implements IState {
     }
 
     @Override
+    public String getStateName() {
+        return "Network";
+    }
+
+    @Override
     public void turnOn() {
 
     }

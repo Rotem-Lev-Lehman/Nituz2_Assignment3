@@ -2,6 +2,12 @@ package State;
 
 public interface IState {
 
+    void enterState();
+    void exitState();
+    void printExit();
+    void printEnter();
+    String getStateName();
+
     void turnOn();
     void turnOff();
     void internetOn();

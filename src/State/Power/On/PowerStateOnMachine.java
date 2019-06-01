@@ -6,14 +6,20 @@ import State.Power.On.Download.*;
 import State.Power.On.Queue.*;
 import State.Power.On.Watch.*;
 
-public class PowerStateOnMachine extends IPowerComplexState {
+import java.util.Queue;
 
-    private IWatchState currentWatchState;
+public class PowerStateOnMachine extends APowerComplexState {
+
+    private int points=0;
+    private Queue<MyFile> queue;
+    private double speed;
+
+    private AWatchState currentWatchState;
     private WatchStateIdle watchStateIdle;
     private WatchStatePause watchStatePause;
     private WatchStateWatch watchStateWatch;
 
-    private IDownloadState currentDownloadState;
+    private ADownloadState currentDownloadState;
     private DownloadStateDownload downloadStateDownload;
     private DownloadStateFirstCheck downloadStateFirstCheck;
     private DownloadStateSecondCheck downloadStateSecondCheck;
@@ -21,12 +27,12 @@ public class PowerStateOnMachine extends IPowerComplexState {
     private DownloadStatePause downloadStatePause;
     private DownloadStateRepair downloadStateRepair;
 
-    private IAccountTypeState currentAccountTypeState;
+    private AAccountTypeState currentAccountTypeState;
     private AccountTypeStateAdvanced accountTypeStateAdvanced;
     private AccountTypeStateProfessional accountTypeStateProfessional;
     private AccountTypeStateStarter accountTypeStateStarter;
 
-    private IQueueState currentQueueState;
+    private AQueueState currentQueueState;
     private QueueStateManager queueStateManager;
 
     public PowerStateOnMachine(MovieDownloader movieDownloader) {
@@ -59,28 +65,39 @@ public class PowerStateOnMachine extends IPowerComplexState {
         currentStates.add(currentQueueState);
     }
 
-    public void setCurrentWatchState(IWatchState state){
+    public void setCurrentWatchState(AWatchState state){
         currentStates.remove(currentWatchState);
+        currentWatchState.exitState();
         currentWatchState = state;
         currentStates.add(currentWatchState);
+        currentWatchState.enterState();
+
     }
 
-    public void setCurrentDownloadState(IDownloadState state){
+    public void setCurrentDownloadState(ADownloadState state){
         currentStates.remove(currentDownloadState);
+        currentDownloadState.exitState();
         currentDownloadState = state;
         currentStates.add(currentDownloadState);
+        currentDownloadState.enterState();
+
     }
 
-    public void setCurrentAccountTypeState(IAccountTypeState state){
+    public void setCurrentAccountTypeState(AAccountTypeState state){
         currentStates.remove(currentAccountTypeState);
+        currentAccountTypeState.exitState();
         currentAccountTypeState = state;
         currentStates.add(currentAccountTypeState);
+        currentAccountTypeState.enterState();
+
     }
 
-    public void setCurrentQueueState(IQueueState state){
+    public void setCurrentQueueState(AQueueState state){
         currentStates.remove(currentQueueState);
+        currentQueueState.exitState();
         currentQueueState = state;
         currentStates.add(currentQueueState);
+        currentQueueState.enterState();
     }
 
     public WatchStateIdle getWatchStateIdle() {
@@ -135,4 +152,39 @@ public class PowerStateOnMachine extends IPowerComplexState {
         return queueStateManager;
     }
 
+    @Override
+    public void enterState() {
+
+    }
+
+    @Override
+    public void exitState() {
+
+    }
+
+    @Override
+    public String getStateName() {
+        return "On";
+    }
+
+    public AWatchState getCurrentWatchState() {
+        return currentWatchState;
+    }
+
+    public ADownloadState getCurrentDownloadState() {
+        return currentDownloadState;
+    }
+
+    public AAccountTypeState getCurrentAccountTypeState() {
+        return currentAccountTypeState;
+    }
+
+    public AQueueState getCurrentQueueState() {
+        return currentQueueState;
+    }
+
+    public void turnOff() {
+        super.turnOff();
+        movieDownloader.setCurrentPowerState(movieDownloader.getPowerStateOff());
+    }
 }

@@ -46,12 +46,41 @@ public class MovieDownloader extends AComplexState{
 
     public void setCurrentPowerState(IPowerState state) {
         currentStates.remove(currentPowerState);
+        currentPowerState.exitState();
         this.currentPowerState = state;
         currentStates.add(currentPowerState);
+        currentPowerState.enterState();
     }
 
     public void setCurrentNetworkState(ANetworkState state) {
         currentStates.remove(currentNetworkState);
+        currentNetworkState.exitState();
         this.currentNetworkState = state;
-        currentStates.add(currentNetworkState);    }
+        currentStates.add(currentNetworkState);
+        currentNetworkState.enterState();
+    }
+
+
+    @Override
+    public void enterState() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void exitState() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String getStateName() {
+        throw new UnsupportedOperationException();
+    }
+
+    public IPowerState getCurrentPowerState() {
+        return currentPowerState;
+    }
+
+    public ANetworkState getCurrentNetworkState() {
+        return currentNetworkState;
+    }
 }
