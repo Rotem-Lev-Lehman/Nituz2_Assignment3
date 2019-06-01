@@ -1,7 +1,16 @@
-import Network.INetworkState;
-import Power.IPowerState;
+import State.Network.*;
+import State.Power.APowerState;
+import State.Power.Off.*;
+import State.Power.On.*;
 
 public class MovieDownloader {
-    private IPowerState current_Power_State;
-    private INetworkState current_Network_State;
+
+    private APowerState currentPowerState;
+    private PowerStateOff powerStateOff;
+    private PowerStateOn powerStateOn;
+
+    private ANetworkState currentNetworkState;
+    private NetworkStateOff networkStateOff;
+    private NetworkStateOn networkStateOn;
+
 }
