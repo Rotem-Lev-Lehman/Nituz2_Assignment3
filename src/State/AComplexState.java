@@ -39,7 +39,7 @@ public abstract class AComplexState implements IState{
     @Override
     public void fileRequest(MyFile file) {
         for(IState state : currentStates)
-            state.fileRequest();
+            state.fileRequest(file);
     }
 
     @Override
