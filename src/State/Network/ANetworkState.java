@@ -1,8 +1,14 @@
 package State.Network;
 
 import State.IState;
+import State.MovieDownloader;
 
 public abstract class ANetworkState implements IState {
+    protected MovieDownloader movieDownloader;
+
+    public ANetworkState(MovieDownloader movieDownloader) {
+        this.movieDownloader=movieDownloader;
+    }
 
     @Override
     public void turnOn() {

@@ -1,23 +1,19 @@
 package State.Power.On;
 
-import State.Power.APowerState;
+import State.MovieDownloader;
 import State.Power.On.AccountType.*;
 import State.Power.On.Download.*;
 import State.Power.On.Queue.*;
 import State.Power.On.Watch.*;
 
-import java.util.ArrayList;
-import java.util.List;
+public class PowerStateOnMachine extends IPowerComplexState {
 
-public class PowerStateOnMachine extends APowerState {
-    private List<PowerStateOn> currentStates;
-
-    private AWatchState currentWatchState;
+    private IWatchState currentWatchState;
     private WatchStateIdle watchStateIdle;
     private WatchStatePause watchStatePause;
     private WatchStateWatch watchStateWatch;
 
-    private ADownloadState currentDownloadState;
+    private IDownloadState currentDownloadState;
     private DownloadStateDownload downloadStateDownload;
     private DownloadStateFirstCheck downloadStateFirstCheck;
     private DownloadStateSecondCheck downloadStateSecondCheck;
@@ -25,16 +21,17 @@ public class PowerStateOnMachine extends APowerState {
     private DownloadStatePause downloadStatePause;
     private DownloadStateRepair downloadStateRepair;
 
-    private AAccountTypeState currentAccountTypeState;
+    private IAccountTypeState currentAccountTypeState;
     private AccountTypeStateAdvanced accountTypeStateAdvanced;
     private AccountTypeStateProfessional accountTypeStateProfessional;
     private AccountTypeStateStarter accountTypeStateStarter;
 
-    private AQueueState currentQueueState;
+    private IQueueState currentQueueState;
     private QueueStateManager queueStateManager;
 
-    public PowerStateOnMachine() {
-        this.currentStates = new ArrayList<>();
+    public PowerStateOnMachine(MovieDownloader movieDownloader) {
+
+        super(movieDownloader);
 
         this.watchStateIdle = new WatchStateIdle(this);
         this.watchStatePause = new WatchStatePause(this);
@@ -62,25 +59,25 @@ public class PowerStateOnMachine extends APowerState {
         currentStates.add(currentQueueState);
     }
 
-    public void setCurrentWatchState(AWatchState state){
+    public void setCurrentWatchState(IWatchState state){
         currentStates.remove(currentWatchState);
         currentWatchState = state;
         currentStates.add(currentWatchState);
     }
 
-    public void setCurrentDownloadState(ADownloadState state){
+    public void setCurrentDownloadState(IDownloadState state){
         currentStates.remove(currentDownloadState);
         currentDownloadState = state;
         currentStates.add(currentDownloadState);
     }
 
-    public void setCurrentAccountTypeState(AAccountTypeState state){
+    public void setCurrentAccountTypeState(IAccountTypeState state){
         currentStates.remove(currentAccountTypeState);
         currentAccountTypeState = state;
         currentStates.add(currentAccountTypeState);
     }
 
-    public void setCurrentQueueState(AQueueState state){
+    public void setCurrentQueueState(IQueueState state){
         currentStates.remove(currentQueueState);
         currentQueueState = state;
         currentStates.add(currentQueueState);
@@ -138,81 +135,4 @@ public class PowerStateOnMachine extends APowerState {
         return queueStateManager;
     }
 
-    @Override
-    public void turnOn() {
-        for(PowerStateOn state : currentStates)
-            state.turnOn();
-    }
-
-    @Override
-    public void turnOff() {
-        for(PowerStateOn state : currentStates)
-            state.turnOff();
-    }
-
-    @Override
-    public void internetOn() {
-        for(PowerStateOn state : currentStates)
-            state.internetOn();
-    }
-
-    @Override
-    public void internetOff() {
-        for(PowerStateOn state : currentStates)
-            state.internetOff();
-    }
-
-    @Override
-    public void fileRequest() {
-        for(PowerStateOn state : currentStates)
-            state.fileRequest();
-    }
-
-    @Override
-    public void downloadAborted() {
-        for(PowerStateOn state : currentStates)
-            state.downloadAborted();
-    }
-
-    @Override
-    public void downloadError() {
-        for(PowerStateOn state : currentStates)
-            state.downloadError();
-    }
-
-    @Override
-    public void errorFixed() {
-        for(PowerStateOn state : currentStates)
-            state.errorFixed();
-    }
-
-    @Override
-    public void movieOn() {
-        for(PowerStateOn state : currentStates)
-            state.movieOn();
-    }
-
-    @Override
-    public void restartMovie() {
-        for(PowerStateOn state : currentStates)
-            state.restartMovie();
-    }
-
-    @Override
-    public void holdMovie() {
-        for(PowerStateOn state : currentStates)
-            state.holdMovie();
-    }
-
-    @Override
-    public void movieOff() {
-        for(PowerStateOn state : currentStates)
-            state.movieOff();
-    }
-
-    @Override
-    public void resume() {
-        for(PowerStateOn state : currentStates)
-            state.resume();
-    }
 }
