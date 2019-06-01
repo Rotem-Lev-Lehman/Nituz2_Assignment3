@@ -1,6 +1,5 @@
 package State.Power.On;
 
-import State.IState;
 import State.Power.APowerState;
 import State.Power.On.AccountType.*;
 import State.Power.On.Download.*;
@@ -8,7 +7,6 @@ import State.Power.On.Queue.*;
 import State.Power.On.Watch.*;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class PowerStateOnMachine extends APowerState {
@@ -62,6 +60,82 @@ public class PowerStateOnMachine extends APowerState {
         this.queueStateManager = new QueueStateManager();
         this.currentQueueState = queueStateManager;
         currentStates.add(currentQueueState);
+    }
+
+    public void setCurrentWatchState(AWatchState state){
+        currentStates.remove(currentWatchState);
+        currentWatchState = state;
+        currentStates.add(currentWatchState);
+    }
+
+    public void setCurrentDownloadState(ADownloadState state){
+        currentStates.remove(currentDownloadState);
+        currentDownloadState = state;
+        currentStates.add(currentDownloadState);
+    }
+
+    public void setCurrentAccountTypeState(AAccountTypeState state){
+        currentStates.remove(currentAccountTypeState);
+        currentAccountTypeState = state;
+        currentStates.add(currentAccountTypeState);
+    }
+
+    public void setCurrentQueueState(AQueueState state){
+        currentStates.remove(currentQueueState);
+        currentQueueState = state;
+        currentStates.add(currentQueueState);
+    }
+
+    public WatchStateIdle getWatchStateIdle() {
+        return watchStateIdle;
+    }
+
+    public WatchStatePause getWatchStatePause() {
+        return watchStatePause;
+    }
+
+    public WatchStateWatch getWatchStateWatch() {
+        return watchStateWatch;
+    }
+
+    public DownloadStateDownload getDownloadStateDownload() {
+        return downloadStateDownload;
+    }
+
+    public DownloadStateFirstCheck getDownloadStateFirstCheck() {
+        return downloadStateFirstCheck;
+    }
+
+    public DownloadStateSecondCheck getDownloadStateSecondCheck() {
+        return downloadStateSecondCheck;
+    }
+
+    public DownloadStateIdle getDownloadStateIdle() {
+        return downloadStateIdle;
+    }
+
+    public DownloadStatePause getDownloadStatePause() {
+        return downloadStatePause;
+    }
+
+    public DownloadStateRepair getDownloadStateRepair() {
+        return downloadStateRepair;
+    }
+
+    public AccountTypeStateAdvanced getAccountTypeStateAdvanced() {
+        return accountTypeStateAdvanced;
+    }
+
+    public AccountTypeStateProfessional getAccountTypeStateProfessional() {
+        return accountTypeStateProfessional;
+    }
+
+    public AccountTypeStateStarter getAccountTypeStateStarter() {
+        return accountTypeStateStarter;
+    }
+
+    public QueueStateManager getQueueStateManager() {
+        return queueStateManager;
     }
 
     @Override
