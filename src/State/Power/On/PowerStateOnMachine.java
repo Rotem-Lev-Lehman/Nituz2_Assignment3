@@ -14,6 +14,7 @@ public class PowerStateOnMachine extends APowerComplexState {
     private int points;
     private double spaceAvailable;
     private Queue<MyFile> queue;
+    private double speed;
 
     private AWatchState currentWatchState;
     private WatchStateIdle watchStateIdle;
@@ -43,10 +44,18 @@ public class PowerStateOnMachine extends APowerComplexState {
         points=1;
         queue=new LinkedBlockingQueue<>();
 
+        this.queueStateManager = new QueueStateManager(this);
+        setCurrentQueueState(queueStateManager);
+
         this.watchStateIdle = new WatchStateIdle(this);
         this.watchStatePause = new WatchStatePause(this);
         this.watchStateWatch = new WatchStateWatch(this);
         setCurrentWatchState(watchStateIdle);
+
+        this.accountTypeStateAdvanced = new AccountTypeStateAdvanced(this);
+        this.accountTypeStateProfessional = new AccountTypeStateProfessional(this);
+        this.accountTypeStateStarter = new AccountTypeStateStarter(this);
+        setCurrentAccountTypeState(accountTypeStateStarter);
 
         this.downloadStateDownload = new DownloadStateDownload(this);
         this.downloadStateFirstCheck = new DownloadStateFirstCheck(this);
@@ -56,14 +65,6 @@ public class PowerStateOnMachine extends APowerComplexState {
         this.downloadStateRepair = new DownloadStateRepair(this);
         this.currentDownloadState = downloadStateIdle;
         setCurrentDownloadState(downloadStateIdle);
-
-        this.accountTypeStateAdvanced = new AccountTypeStateAdvanced(this);
-        this.accountTypeStateProfessional = new AccountTypeStateProfessional(this);
-        this.accountTypeStateStarter = new AccountTypeStateStarter(this);
-        setCurrentAccountTypeState(accountTypeStateStarter);
-
-        this.queueStateManager = new QueueStateManager(this);
-        setCurrentQueueState(queueStateManager);
     }
 
 
@@ -216,7 +217,11 @@ public class PowerStateOnMachine extends APowerComplexState {
     }
 
     public void setSpeed(double speed){
-        downloadStateDownload.setSpeed(speed);
+        this.speed=speed;
+    }
+
+    public double getSpeed() {
+        return speed;
     }
 
     public double getProgress(){

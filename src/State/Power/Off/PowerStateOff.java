@@ -5,7 +5,7 @@ import State.Power.IPowerState;
 import State.Power.On.MyFile;
 
 public class PowerStateOff implements IPowerState {
-    private MovieDownloader movieDownloader;
+    MovieDownloader movieDownloader;
 
     public PowerStateOff(MovieDownloader movieDownloader) {
         this.movieDownloader = movieDownloader;

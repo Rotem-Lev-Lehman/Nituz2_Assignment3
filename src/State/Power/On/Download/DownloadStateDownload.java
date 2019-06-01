@@ -7,7 +7,6 @@ public class DownloadStateDownload extends ADownloadState {
     private double dataReceived;
     private double progress;
     private MyFile file;
-    private double speed;
 
     public DownloadStateDownload(PowerStateOnMachine powerStateOnMachine) {
         super(powerStateOnMachine);
@@ -60,10 +59,6 @@ public class DownloadStateDownload extends ADownloadState {
         if(powerStateOnMachine.getMovieDownloader().getCurrentNetworkState()==powerStateOnMachine.getMovieDownloader().getNetworkStateOff()){
             powerStateOnMachine.setCurrentDownloadState(powerStateOnMachine.getDownloadStatePause());
         }
-    }
-
-    public void setSpeed(double speed) {
-        this.speed = speed;
     }
 
     @Override

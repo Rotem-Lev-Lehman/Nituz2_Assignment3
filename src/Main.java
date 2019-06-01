@@ -49,25 +49,26 @@ public class Main {
             System.out.println();
             System.out.println("Please enter a number: ");
             int n = reader.nextInt(); // Scans the next token of the input as an int.
-            reader.close();
             switch(n){
+                case 0:
+                    movieDownloader.turnOn();
                 case 1:
-                    movieDownloader.getPowerStateOff();
+                    movieDownloader.turnOff();
                     break;
                 case 2:
-                    movieDownloader.getPowerStateOnMachine();
+                    movieDownloader.internetOn();
                     break;
                 case 3:
-                    movieDownloader.getNetworkStateOff();
+                    movieDownloader.internetOff();
                     break;
                 case 4:
                     Scanner reader1 = new Scanner(System.in);
                     System.out.println("Please enter thw file name: ");
-                    String s = reader.nextLine();
+                    String s = reader1.nextLine();
                     reader.close();
                     Scanner reader2 = new Scanner(System.in);
                     System.out.println("Please enter a number: ");
-                    int sizeOfFile = reader.nextInt();
+                    int sizeOfFile = reader2.nextInt();
                     reader.close();
                     MyFile myfile = new MyFile(s,sizeOfFile);
                     movieDownloader.fileRequest(myfile);
