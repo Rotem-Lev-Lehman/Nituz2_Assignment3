@@ -1,18 +1,28 @@
 package State;
 
+import State.Power.On.MyFile;
+
 public interface IState {
 
-    void enterState();
-    void exitState();
-    void printExit();
-    void printEnter();
     String getStateName();
+    default void enterState(){
+        printEnter();
+    }
+    default void exitState(){
+        printExit();
+    }
+    default void printEnter(){
+        System.out.println("enter " + getStateName() + " state");
+    }
+    default void printExit(){
+        System.out.println("exit " + getStateName() + " state");
+    }
 
     void turnOn();
     void turnOff();
     void internetOn();
     void internetOff();
-    void fileRequest();
+    void fileRequest(MyFile file);
     void downloadAborted();
     void downloadError();
     void errorFixed();

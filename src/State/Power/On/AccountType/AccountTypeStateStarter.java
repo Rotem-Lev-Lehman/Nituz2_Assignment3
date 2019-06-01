@@ -11,4 +11,17 @@ public class AccountTypeStateStarter extends AAccountTypeState {
     public String getStateName() {
         return "Starter";
     }
+
+    @Override
+    public void pointsChanged() {
+        int points=powerStateOnMachine.getPoints();
+        if(points>=4){
+            powerStateOnMachine.setCurrentAccountTypeState(powerStateOnMachine.getAccountTypeStateAdvanced());
+        }
+    }
+
+    @Override
+    public void setSpeed() {
+        powerStateOnMachine.setSpeed(1);
+    }
 }

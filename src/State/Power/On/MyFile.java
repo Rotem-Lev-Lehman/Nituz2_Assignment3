@@ -1,15 +1,15 @@
 package State.Power.On;
 
 public class MyFile {
-    private int size;
+    private double size;
     private String name;
 
-    public MyFile(int size, String name) {
+    public MyFile(double size, String name) {
         this.size = size;
         this.name = name;
     }
 
-    public int getSize() {
+    public double getSize() {
         return size;
     }
 

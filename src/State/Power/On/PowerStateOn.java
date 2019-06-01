@@ -1,6 +1,5 @@
 package State.Power.On;
 
-import State.IState;
 import State.Power.IPowerState;
 
 public abstract class PowerStateOn implements IPowerState {
@@ -8,14 +7,6 @@ public abstract class PowerStateOn implements IPowerState {
 
     public PowerStateOn(PowerStateOnMachine powerStateOnMachine) {
         this.powerStateOnMachine = powerStateOnMachine;
-    }
-
-    protected void printExit() {
-        System.out.println("exit " + getStateName() + " state");
-    }
-
-    protected void printEnter() {
-        System.out.println("enter " + getStateName() + " state");
     }
 
     @Override
@@ -39,7 +30,7 @@ public abstract class PowerStateOn implements IPowerState {
     }
 
     @Override
-    public void fileRequest() {
+    public void fileRequest(MyFile file) {
 
     }
 

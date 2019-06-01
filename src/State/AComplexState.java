@@ -1,5 +1,7 @@
 package State;
 
+import State.Power.On.MyFile;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,7 +37,7 @@ public abstract class AComplexState implements IState{
     }
 
     @Override
-    public void fileRequest() {
+    public void fileRequest(MyFile file) {
         for(IState state : currentStates)
             state.fileRequest();
     }
@@ -86,5 +88,12 @@ public abstract class AComplexState implements IState{
     public void resume() {
         for(IState state : currentStates)
             state.resume();
+    }
+
+    public void removeCurrentState(IState state){
+        if(state!=null){
+            currentStates.remove(state);
+            state.exitState();
+        }
     }
 }

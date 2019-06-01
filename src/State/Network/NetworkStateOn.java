@@ -17,4 +17,5 @@ public class NetworkStateOn extends ANetworkState{
     public void internetOff() {
         movieDownloader.setCurrentNetworkState(movieDownloader.getNetworkStateOff());
     }
+
 }

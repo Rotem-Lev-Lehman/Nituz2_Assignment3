@@ -8,4 +8,11 @@ public abstract class AAccountTypeState extends PowerStateOn {
         super(powerStateOnMachine);
     }
 
+    public abstract void pointsChanged();
+    public abstract void setSpeed();
+
+    public void enterState(){
+        super.enterState();
+        setSpeed();
+    }
 }

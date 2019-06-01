@@ -11,4 +11,8 @@ public class DownloadStatePause extends ADownloadState {
     public String getStateName() {
         return "Download_Pause";
     }
+
+    public void internetOn(){
+        powerStateOnMachine.setCurrentDownloadState(powerStateOnMachine.getDownloadStateDownload());
+    }
 }

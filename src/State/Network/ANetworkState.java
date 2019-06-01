@@ -2,6 +2,7 @@ package State.Network;
 
 import State.IState;
 import State.MovieDownloader;
+import State.Power.On.MyFile;
 
 public abstract class ANetworkState implements IState {
     protected MovieDownloader movieDownloader;
@@ -14,6 +15,7 @@ public abstract class ANetworkState implements IState {
     public String getStateName() {
         return "Network";
     }
+
 
     @Override
     public void turnOn() {
@@ -36,7 +38,7 @@ public abstract class ANetworkState implements IState {
     }
 
     @Override
-    public void fileRequest() {
+    public void fileRequest(MyFile file) {
 
     }
 

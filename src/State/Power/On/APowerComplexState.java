@@ -10,4 +10,8 @@ public abstract class APowerComplexState extends AComplexState implements IPower
     public APowerComplexState(MovieDownloader movieDownloader) {
         this.movieDownloader = movieDownloader;
     }
+
+    public MovieDownloader getMovieDownloader() {
+        return movieDownloader;
+    }
 }

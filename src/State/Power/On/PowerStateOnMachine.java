@@ -1,18 +1,21 @@
 package State.Power.On;
 
+import State.IState;
 import State.MovieDownloader;
 import State.Power.On.AccountType.*;
 import State.Power.On.Download.*;
 import State.Power.On.Queue.*;
 import State.Power.On.Watch.*;
+import javafx.beans.value.ObservableDoubleValue;
 
 import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class PowerStateOnMachine extends APowerComplexState {
 
-    private int points=0;
+    private int points;
+    private double space_available;
     private Queue<MyFile> queue;
-    private double speed;
 
     private AWatchState currentWatchState;
     private WatchStateIdle watchStateIdle;
@@ -36,14 +39,16 @@ public class PowerStateOnMachine extends APowerComplexState {
     private QueueStateManager queueStateManager;
 
     public PowerStateOnMachine(MovieDownloader movieDownloader) {
-
         super(movieDownloader);
+
+        space_available=100;
+        points=1;
+        queue=new LinkedBlockingQueue<>();
 
         this.watchStateIdle = new WatchStateIdle(this);
         this.watchStatePause = new WatchStatePause(this);
         this.watchStateWatch = new WatchStateWatch(this);
-        this.currentWatchState = watchStateIdle;
-        currentStates.add(currentWatchState);
+        setCurrentWatchState(watchStateIdle);
 
         this.downloadStateDownload = new DownloadStateDownload(this);
         this.downloadStateFirstCheck = new DownloadStateFirstCheck(this);
@@ -52,22 +57,20 @@ public class PowerStateOnMachine extends APowerComplexState {
         this.downloadStatePause = new DownloadStatePause(this);
         this.downloadStateRepair = new DownloadStateRepair(this);
         this.currentDownloadState = downloadStateIdle;
-        currentStates.add(currentDownloadState);
+        setCurrentDownloadState(downloadStateIdle);
 
         this.accountTypeStateAdvanced = new AccountTypeStateAdvanced(this);
         this.accountTypeStateProfessional = new AccountTypeStateProfessional(this);
         this.accountTypeStateStarter = new AccountTypeStateStarter(this);
-        this.currentAccountTypeState = accountTypeStateStarter;
-        currentStates.add(currentAccountTypeState);
+        setCurrentAccountTypeState(accountTypeStateStarter);
 
         this.queueStateManager = new QueueStateManager(this);
-        this.currentQueueState = queueStateManager;
-        currentStates.add(currentQueueState);
+        setCurrentQueueState(queueStateManager);
     }
 
+
     public void setCurrentWatchState(AWatchState state){
-        currentStates.remove(currentWatchState);
-        currentWatchState.exitState();
+        removeCurrentState(currentWatchState);
         currentWatchState = state;
         currentStates.add(currentWatchState);
         currentWatchState.enterState();
@@ -75,8 +78,7 @@ public class PowerStateOnMachine extends APowerComplexState {
     }
 
     public void setCurrentDownloadState(ADownloadState state){
-        currentStates.remove(currentDownloadState);
-        currentDownloadState.exitState();
+        removeCurrentState(currentDownloadState);
         currentDownloadState = state;
         currentStates.add(currentDownloadState);
         currentDownloadState.enterState();
@@ -84,8 +86,7 @@ public class PowerStateOnMachine extends APowerComplexState {
     }
 
     public void setCurrentAccountTypeState(AAccountTypeState state){
-        currentStates.remove(currentAccountTypeState);
-        currentAccountTypeState.exitState();
+        removeCurrentState(currentAccountTypeState);
         currentAccountTypeState = state;
         currentStates.add(currentAccountTypeState);
         currentAccountTypeState.enterState();
@@ -93,8 +94,7 @@ public class PowerStateOnMachine extends APowerComplexState {
     }
 
     public void setCurrentQueueState(AQueueState state){
-        currentStates.remove(currentQueueState);
-        currentQueueState.exitState();
+        removeCurrentState(currentQueueState);
         currentQueueState = state;
         currentStates.add(currentQueueState);
         currentQueueState.enterState();
@@ -153,16 +153,6 @@ public class PowerStateOnMachine extends APowerComplexState {
     }
 
     @Override
-    public void enterState() {
-
-    }
-
-    @Override
-    public void exitState() {
-
-    }
-
-    @Override
     public String getStateName() {
         return "On";
     }
@@ -186,5 +176,54 @@ public class PowerStateOnMachine extends APowerComplexState {
     public void turnOff() {
         super.turnOff();
         movieDownloader.setCurrentPowerState(movieDownloader.getPowerStateOff());
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void addPoint(){
+        points++;
+        currentAccountTypeState.pointsChanged();
+    }
+
+    public void removePoint(){
+        points=Math.max(0,points-1);
+        currentAccountTypeState.pointsChanged();
+    }
+
+    public void getNext(){
+        if(queue.size()>0)
+            downloadStateDownload.setFile(queue.remove());
+        else
+            downloadStateDownload.setFile(null);
+    }
+
+    public void addFile(MyFile file){
+        queue.add(file);
+    }
+
+    public double getSpace_available() {
+        return space_available;
+    }
+
+    public void setSpace_available(int space_available) {
+        this.space_available = space_available;
+    }
+
+    public double getCurrentFileSize() {
+        return downloadStateDownload.getFileSize();
+    }
+
+    public void setSpeed(double speed){
+        downloadStateDownload.setSpeed(speed);
+    }
+
+    public double getProgress(){
+        return downloadStateDownload.getProgress();
+    }
+
+    public void resetTime(){
+        watchStateWatch.resetTime();
     }
 }

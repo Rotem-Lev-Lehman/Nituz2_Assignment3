@@ -11,4 +11,17 @@ public class AccountTypeStateProfessional extends AAccountTypeState {
     public String getStateName() {
         return "Professional";
     }
+
+    @Override
+    public void pointsChanged() {
+        int points=powerStateOnMachine.getPoints();
+        if(points<7){
+            powerStateOnMachine.setCurrentAccountTypeState(powerStateOnMachine.getAccountTypeStateAdvanced());
+        }
+    }
+
+    @Override
+    public void setSpeed() {
+        powerStateOnMachine.setSpeed(1.5);
+    }
 }

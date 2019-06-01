@@ -11,4 +11,9 @@ public class DownloadStateRepair extends ADownloadState {
     public String getStateName() {
         return "Repair";
     }
+
+    @Override
+    public void errorFixed() {
+        powerStateOnMachine.setCurrentDownloadState(powerStateOnMachine.getDownloadStateDownload());
+    }
 }

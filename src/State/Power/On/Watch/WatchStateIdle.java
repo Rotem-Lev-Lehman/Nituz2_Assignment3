@@ -11,4 +11,12 @@ public class WatchStateIdle extends AWatchState {
     public String getStateName() {
         return "Watch_Idle";
     }
+
+    @Override
+    public void movieOn() {
+        if(powerStateOnMachine.getCurrentDownloadState()==powerStateOnMachine.getDownloadStateDownload() && powerStateOnMachine.getProgress()>=0.2){
+            powerStateOnMachine.resetTime();
+            powerStateOnMachine.setCurrentWatchState(powerStateOnMachine.getWatchStateWatch());
+        }
+    }
 }

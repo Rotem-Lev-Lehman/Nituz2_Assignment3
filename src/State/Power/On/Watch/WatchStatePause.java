@@ -11,4 +11,9 @@ public class WatchStatePause extends AWatchState {
     public String getStateName() {
         return "Pause";
     }
+
+    @Override
+    public void resume() {
+        powerStateOnMachine.setCurrentWatchState(powerStateOnMachine.getWatchStateWatch());
+    }
 }

@@ -11,4 +11,7 @@ public class DownloadStateIdle extends ADownloadState {
     public String getStateName() {
         return "Download_Idle";
     }
+
+    @Override
+    public void downloadAborted() { }
 }
