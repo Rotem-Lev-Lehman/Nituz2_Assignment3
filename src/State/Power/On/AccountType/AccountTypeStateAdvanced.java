@@ -27,4 +27,5 @@ public class AccountTypeStateAdvanced extends AAccountTypeState {
     public String getStateName() {
         return "Advanced";
     }
+
 }

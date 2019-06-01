@@ -12,4 +12,7 @@ public abstract class ADownloadState extends PowerStateOn{
     public void downloadAborted() {
         powerStateOnMachine.setCurrentDownloadState(powerStateOnMachine.getDownloadStateIdle());
     }
+
+    public void fileAdded(){}
+
 }

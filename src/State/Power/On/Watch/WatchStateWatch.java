@@ -1,5 +1,6 @@
 package State.Power.On.Watch;
 
+import State.Power.On.Download.ADownloadState;
 import State.Power.On.PowerStateOnMachine;
 
 public class WatchStateWatch extends AWatchState {
@@ -25,6 +26,7 @@ public class WatchStateWatch extends AWatchState {
 
     @Override
     public void holdMovie() {
+        powerStateOnMachine.setSelfPause(true);
         powerStateOnMachine.setCurrentWatchState(powerStateOnMachine.getWatchStatePause());
     }
 
@@ -32,4 +34,25 @@ public class WatchStateWatch extends AWatchState {
     public void movieOff() {
         powerStateOnMachine.setCurrentWatchState(powerStateOnMachine.getWatchStateIdle());
     }
+
+    @Override
+    public void enterState(){
+        super.enterState();
+        checkPauseNeeded();
+    }
+
+    @Override
+    public void downloadStateChanged(){
+        super.downloadStateChanged();
+        checkPauseNeeded();
+    }
+
+    private void checkPauseNeeded(){
+        ADownloadState current=powerStateOnMachine.getCurrentDownloadState();
+        if(current==powerStateOnMachine.getDownloadStateRepair() || current==powerStateOnMachine.getDownloadStatePause()){
+            powerStateOnMachine.setSelfPause(false);
+            powerStateOnMachine.setCurrentWatchState(powerStateOnMachine.getWatchStatePause());
+        }
+    }
+
 }

@@ -29,7 +29,11 @@ public class DownloadStateDownload extends ADownloadState {
 
     private void setDataReceived(double i) {
         dataReceived=i;
-        progress=i/file.getSize();
+        if(file!=null){
+            progress=i/file.getSize();
+        }
+        else
+            progress=0;
     }
 
     private void addChunk(double chunk){

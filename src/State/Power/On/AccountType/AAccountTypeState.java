@@ -12,6 +12,7 @@ public abstract class AAccountTypeState extends PowerStateOn {
     public abstract void setSpeed();
 
     public void enterState(){
+
         super.enterState();
         setSpeed();
     }

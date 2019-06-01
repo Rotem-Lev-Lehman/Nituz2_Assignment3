@@ -11,4 +11,15 @@ public class DownloadStateFirstCheck extends ADownloadState {
     public String getStateName() {
         return "First_Check";
     }
+
+    @Override
+    public void enterState() {
+        super.enterState();
+        if(powerStateOnMachine.getSpaceAvailable()>=powerStateOnMachine.getCurrentFileSize()){
+            powerStateOnMachine.setCurrentDownloadState(powerStateOnMachine.getDownloadStateDownload());
+        }
+        else{
+            powerStateOnMachine.setCurrentDownloadState(powerStateOnMachine.getDownloadStateSecondCheck());
+        }
+    }
 }

@@ -16,4 +16,10 @@ public class DownloadStateRepair extends ADownloadState {
     public void errorFixed() {
         powerStateOnMachine.setCurrentDownloadState(powerStateOnMachine.getDownloadStateDownload());
     }
+
+    @Override
+    public void enterState() {
+        super.enterState();
+        //how to do tm(3)
+    }
 }

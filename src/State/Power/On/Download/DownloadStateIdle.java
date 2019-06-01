@@ -14,4 +14,24 @@ public class DownloadStateIdle extends ADownloadState {
 
     @Override
     public void downloadAborted() { }
+
+    @Override
+    public void enterState() {
+        super.enterState();
+        powerStateOnMachine.removePoint();
+        powerStateOnMachine.resetData();
+        checkFileWaits();
+    }
+
+    private void checkFileWaits() {
+        if(powerStateOnMachine.fileWaits()){
+            powerStateOnMachine.getNext();
+            powerStateOnMachine.setCurrentDownloadState(powerStateOnMachine.getDownloadStateFirstCheck());
+        }
+    }
+
+    public void fileAdded(){
+        checkFileWaits();
+    }
+
 }

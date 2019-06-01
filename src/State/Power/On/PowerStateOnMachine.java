@@ -1,12 +1,10 @@
 package State.Power.On;
 
-import State.IState;
 import State.MovieDownloader;
 import State.Power.On.AccountType.*;
 import State.Power.On.Download.*;
 import State.Power.On.Queue.*;
 import State.Power.On.Watch.*;
-import javafx.beans.value.ObservableDoubleValue;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -14,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class PowerStateOnMachine extends APowerComplexState {
 
     private int points;
-    private double space_available;
+    private double spaceAvailable;
     private Queue<MyFile> queue;
 
     private AWatchState currentWatchState;
@@ -41,7 +39,7 @@ public class PowerStateOnMachine extends APowerComplexState {
     public PowerStateOnMachine(MovieDownloader movieDownloader) {
         super(movieDownloader);
 
-        space_available=100;
+        spaceAvailable =100;
         points=1;
         queue=new LinkedBlockingQueue<>();
 
@@ -82,6 +80,7 @@ public class PowerStateOnMachine extends APowerComplexState {
         currentDownloadState = state;
         currentStates.add(currentDownloadState);
         currentDownloadState.enterState();
+        currentWatchState.downloadStateChanged();
 
     }
 
@@ -201,14 +200,15 @@ public class PowerStateOnMachine extends APowerComplexState {
 
     public void addFile(MyFile file){
         queue.add(file);
+        currentDownloadState.fileAdded();
     }
 
-    public double getSpace_available() {
-        return space_available;
+    public double getSpaceAvailable() {
+        return spaceAvailable;
     }
 
-    public void setSpace_available(int space_available) {
-        this.space_available = space_available;
+    public void setSpaceAvailable(int spaceAvailable) {
+        this.spaceAvailable = spaceAvailable;
     }
 
     public double getCurrentFileSize() {
@@ -225,5 +225,21 @@ public class PowerStateOnMachine extends APowerComplexState {
 
     public void resetTime(){
         watchStateWatch.resetTime();
+    }
+
+    public void setSelfPause(boolean bool){
+        watchStatePause.setSelfPause(bool);
+    }
+
+    public void resetData(){
+        downloadStateDownload.resetData();
+    }
+
+    public boolean fileWaits(){
+        return queue.size()>0;
+    }
+
+    public void addSpace(double amount){
+        spaceAvailable=Math.max(0,spaceAvailable+amount);
     }
 }
