@@ -52,6 +52,7 @@ public class Main {
             switch(n){
                 case 0:
                     movieDownloader.turnOn();
+                    break;
                 case 1:
                     movieDownloader.turnOff();
                     break;
@@ -65,11 +66,11 @@ public class Main {
                     Scanner reader1 = new Scanner(System.in);
                     System.out.println("Please enter thw file name: ");
                     String s = reader1.nextLine();
-                    reader.close();
+                    //reader1.close();
                     Scanner reader2 = new Scanner(System.in);
                     System.out.println("Please enter a number: ");
                     int sizeOfFile = reader2.nextInt();
-                    reader.close();
+                    //reader2.close();
                     MyFile myfile = new MyFile(s,sizeOfFile);
                     movieDownloader.fileRequest(myfile);
                     break;

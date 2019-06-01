@@ -4,12 +4,13 @@ import State.Power.On.MyFile;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public abstract class AComplexState implements IState{
-    protected List<IState> currentStates;
+    protected ConcurrentLinkedQueue<IState> currentStates;
 
     public AComplexState() {
-        this.currentStates = new LinkedList<>();
+        this.currentStates = new ConcurrentLinkedQueue<>();
     }
 
     @Override
