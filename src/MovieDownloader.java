@@ -13,4 +13,13 @@ public class MovieDownloader {
     private NetworkStateOff networkStateOff;
     private NetworkStateOn networkStateOn;
 
+    public MovieDownloader() {
+        powerStateOnMachine = new PowerStateOnMachine();
+        powerStateOff = new PowerStateOff();
+        currentPowerState = powerStateOff;
+
+        networkStateOff = new NetworkStateOff();
+        networkStateOn = new NetworkStateOn();
+        currentNetworkState = networkStateOff;
+    }
 }

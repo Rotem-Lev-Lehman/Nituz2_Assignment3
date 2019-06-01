@@ -36,28 +36,28 @@ public class PowerStateOnMachine extends APowerState {
     public PowerStateOnMachine() {
         this.currentStates = new ArrayList<>();
 
-        this.watchStateIdle = new WatchStateIdle();
-        this.watchStatePause = new WatchStatePause();
-        this.watchStateWatch = new WatchStateWatch();
+        this.watchStateIdle = new WatchStateIdle(this);
+        this.watchStatePause = new WatchStatePause(this);
+        this.watchStateWatch = new WatchStateWatch(this);
         this.currentWatchState = watchStateIdle;
         currentStates.add(currentWatchState);
 
-        this.downloadStateDownload = new DownloadStateDownload();
-        this.downloadStateFirstCheck = new DownloadStateFirstCheck();
-        this.downloadStateSecondCheck = new DownloadStateSecondCheck();
-        this.downloadStateIdle = new DownloadStateIdle();
-        this.downloadStatePause = new DownloadStatePause();
-        this.downloadStateRepair = new DownloadStateRepair();
+        this.downloadStateDownload = new DownloadStateDownload(this);
+        this.downloadStateFirstCheck = new DownloadStateFirstCheck(this);
+        this.downloadStateSecondCheck = new DownloadStateSecondCheck(this);
+        this.downloadStateIdle = new DownloadStateIdle(this);
+        this.downloadStatePause = new DownloadStatePause(this);
+        this.downloadStateRepair = new DownloadStateRepair(this);
         this.currentDownloadState = downloadStateIdle;
         currentStates.add(currentDownloadState);
 
-        this.accountTypeStateAdvanced = new AccountTypeStateAdvanced();
-        this.accountTypeStateProfessional = new AccountTypeStateProfessional();
-        this.accountTypeStateStarter = new AccountTypeStateStarter();
+        this.accountTypeStateAdvanced = new AccountTypeStateAdvanced(this);
+        this.accountTypeStateProfessional = new AccountTypeStateProfessional(this);
+        this.accountTypeStateStarter = new AccountTypeStateStarter(this);
         this.currentAccountTypeState = accountTypeStateStarter;
         currentStates.add(currentAccountTypeState);
 
-        this.queueStateManager = new QueueStateManager();
+        this.queueStateManager = new QueueStateManager(this);
         this.currentQueueState = queueStateManager;
         currentStates.add(currentQueueState);
     }
