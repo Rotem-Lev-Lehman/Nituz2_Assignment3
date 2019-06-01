@@ -32,6 +32,11 @@ public class DownloadStateSecondCheck extends ADownloadState {
         }
     }
 
+    @Override
+    public void exitState() {
+        setNeedToCheck(false);
+    }
+
     public void setNeedToCheck(boolean bool){
         needToCheck = bool;
         if(!needToCheck){
