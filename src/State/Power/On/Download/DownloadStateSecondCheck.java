@@ -34,6 +34,7 @@ public class DownloadStateSecondCheck extends ADownloadState {
 
     @Override
     public void exitState() {
+        super.exitState();
         setNeedToCheck(false);
     }
 

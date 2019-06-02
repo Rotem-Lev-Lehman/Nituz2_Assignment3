@@ -74,4 +74,28 @@ public class MovieDownloader extends AComplexState{
     public ANetworkState getCurrentNetworkState() {
         return currentNetworkState;
     }
+
+    public double getSpaceLeft() {
+        return powerStateOnMachine.getSpaceAvailable();
+    }
+
+    public void addSpace(double space2Add) {
+        powerStateOnMachine.addSpace(space2Add);
+    }
+
+    public boolean isOn() {
+        return currentPowerState==powerStateOnMachine;
+    }
+
+    public double getSpeed() {
+        return powerStateOnMachine.getSpeed();
+    }
+
+    public int getPoints() {
+        return powerStateOnMachine.getPoints();
+    }
+
+    public int getQueueSize() {
+        return powerStateOnMachine.getQueueSize();
+    }
 }

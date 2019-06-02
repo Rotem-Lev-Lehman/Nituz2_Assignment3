@@ -56,6 +56,7 @@ public class DownloadStateDownload extends ADownloadState {
     }
 
     public void enterState(){
+        super.enterState();
         if(powerStateOnMachine.getMovieDownloader().getCurrentNetworkState()==powerStateOnMachine.getMovieDownloader().getNetworkStateOff()){
             powerStateOnMachine.setCurrentDownloadState(powerStateOnMachine.getDownloadStatePause());
         }

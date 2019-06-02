@@ -15,6 +15,7 @@ public class PowerStateOnMachine extends APowerComplexState {
     private double spaceAvailable;
     private Queue<MyFile> queue;
     private double speed;
+    private boolean firstEnter=true;
 
     private AWatchState currentWatchState;
     private WatchStateIdle watchStateIdle;
@@ -45,17 +46,14 @@ public class PowerStateOnMachine extends APowerComplexState {
         queue=new LinkedBlockingQueue<>();
 
         this.queueStateManager = new QueueStateManager(this);
-        setCurrentQueueState(queueStateManager);
 
         this.watchStateIdle = new WatchStateIdle(this);
         this.watchStatePause = new WatchStatePause(this);
         this.watchStateWatch = new WatchStateWatch(this);
-        setCurrentWatchState(watchStateIdle);
 
         this.accountTypeStateAdvanced = new AccountTypeStateAdvanced(this);
         this.accountTypeStateProfessional = new AccountTypeStateProfessional(this);
         this.accountTypeStateStarter = new AccountTypeStateStarter(this);
-        setCurrentAccountTypeState(accountTypeStateStarter);
 
         this.downloadStateDownload = new DownloadStateDownload(this);
         this.downloadStateFirstCheck = new DownloadStateFirstCheck(this);
@@ -63,8 +61,6 @@ public class PowerStateOnMachine extends APowerComplexState {
         this.downloadStateIdle = new DownloadStateIdle(this);
         this.downloadStatePause = new DownloadStatePause(this);
         this.downloadStateRepair = new DownloadStateRepair(this);
-        this.currentDownloadState = downloadStateIdle;
-        setCurrentDownloadState(downloadStateIdle);
     }
 
 
@@ -246,5 +242,21 @@ public class PowerStateOnMachine extends APowerComplexState {
 
     public void addSpace(double amount){
         spaceAvailable=Math.max(0,spaceAvailable+amount);
+    }
+
+    @Override
+    public void enterState() {
+        super.enterState();
+        if(firstEnter){
+            setCurrentQueueState(queueStateManager);
+            setCurrentWatchState(watchStateIdle);
+            setCurrentAccountTypeState(accountTypeStateStarter);
+            setCurrentDownloadState(downloadStateIdle);
+            firstEnter=false;
+        }
+    }
+
+    public int getQueueSize(){
+        return queue.size();
     }
 }
