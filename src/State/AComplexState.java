@@ -91,6 +91,12 @@ public abstract class AComplexState implements IState{
             state.resume();
     }
 
+    @Override
+    public void networkStateChanged() {
+        for(IState state : currentStates)
+            state.networkStateChanged();
+    }
+
     public void removeCurrentState(IState state){
         if(state!=null){
             currentStates.remove(state);

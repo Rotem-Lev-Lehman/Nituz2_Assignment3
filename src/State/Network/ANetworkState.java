@@ -81,4 +81,10 @@ public abstract class ANetworkState implements IState {
     public void resume() {
 
     }
+
+    @Override
+    public void enterState() {
+        IState.super.enterState();
+        movieDownloader.networkStateChanged();
+    }
 }

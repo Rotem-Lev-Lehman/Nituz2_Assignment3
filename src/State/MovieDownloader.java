@@ -98,4 +98,16 @@ public class MovieDownloader extends AComplexState{
     public int getQueueSize() {
         return powerStateOnMachine.getQueueSize();
     }
+
+    public boolean isMovieWatchIsNotIdle() {
+        return powerStateOnMachine.getCurrentWatchState() != powerStateOnMachine.getWatchStateIdle();
+    }
+
+    public double getTime() {
+        return powerStateOnMachine.getTime();
+    }
+
+    public void networkStateChanged() {
+        currentPowerState.networkStateChanged();
+    }
 }

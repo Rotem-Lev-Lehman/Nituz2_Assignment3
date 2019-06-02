@@ -12,7 +12,9 @@ public class DownloadStatePause extends ADownloadState {
         return "Download_Pause";
     }
 
-    public void internetOn(){
-        powerStateOnMachine.setCurrentDownloadState(powerStateOnMachine.getDownloadStateDownload());
+    @Override
+    public void networkStateChanged(){
+        if(powerStateOnMachine.hasInternet())
+            powerStateOnMachine.setCurrentDownloadState(powerStateOnMachine.getDownloadStateDownload());
     }
 }

@@ -54,7 +54,7 @@ public class DownloadStateDownload extends ADownloadState {
     @Override
     public void enterState() {
         super.enterState();
-        if(powerStateOnMachine.getMovieDownloader().getCurrentNetworkState()==powerStateOnMachine.getMovieDownloader().getNetworkStateOff()){
+        if(!powerStateOnMachine.hasInternet()){
             powerStateOnMachine.setCurrentDownloadState(powerStateOnMachine.getDownloadStatePause());
         }
         else {
@@ -94,8 +94,10 @@ public class DownloadStateDownload extends ADownloadState {
         return file.getSize();
     }
 
-    public void internetOff(){
-        powerStateOnMachine.setCurrentDownloadState(powerStateOnMachine.getDownloadStatePause());
+    @Override
+    public void networkStateChanged(){
+        if(!powerStateOnMachine.hasInternet())
+            powerStateOnMachine.setCurrentDownloadState(powerStateOnMachine.getDownloadStatePause());
     }
 
     @Override

@@ -186,6 +186,10 @@ public class Main {
                         System.out.println("You have " + points + " points.");
                         System.out.println("You have download speed of " + speed + " units per second.");
                         System.out.println("There are " + queueSize + " files waiting to be downloaded.");
+                        if(movieDownloader.isMovieWatchIsNotIdle()) {
+                            double time = movieDownloader.getTime();
+                            System.out.println("The movie that is currently watched is at time " + time + " seconds.");
+                        }
                     }
                     else{
                         System.out.println("MovieDownloader is off");

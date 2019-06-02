@@ -1,5 +1,6 @@
 package State.Power.On;
 
+import State.IState;
 import State.MovieDownloader;
 import State.Power.On.AccountType.*;
 import State.Power.On.Download.*;
@@ -171,6 +172,9 @@ public class PowerStateOnMachine extends APowerComplexState {
 
     public void turnOff() {
         super.turnOff();
+        for (IState state:currentStates) {
+            state.exitState();
+        }
         movieDownloader.setCurrentPowerState(movieDownloader.getPowerStateOff());
     }
 
@@ -253,9 +257,22 @@ public class PowerStateOnMachine extends APowerComplexState {
             setCurrentDownloadState(downloadStateIdle);
             firstEnter=false;
         }
+        else{
+            for (IState state:currentStates){
+                state.enterState();
+            }
+        }
     }
 
     public int getQueueSize(){
         return queue.size();
+    }
+
+    public double getTime() {
+        return watchStateWatch.getTime();
+    }
+
+    public boolean hasInternet() {
+        return movieDownloader.getCurrentNetworkState() == movieDownloader.getNetworkStateOn();
     }
 }

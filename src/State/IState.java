@@ -32,4 +32,6 @@ public interface IState {
     void movieOff();
     void resume();
 
+    default void networkStateChanged(){}
+
 }

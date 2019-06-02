@@ -4,10 +4,14 @@ import State.Power.On.Download.ADownloadState;
 import State.Power.On.PowerStateOnMachine;
 
 public class WatchStateWatch extends AWatchState {
-    private double time;
+    private Object lock;
+    private Thread moviePlayer;
+
+    private volatile double time;
 
     public WatchStateWatch(PowerStateOnMachine powerStateOnMachine) {
         super(powerStateOnMachine);
+        lock = new Object();
     }
 
     @Override
@@ -38,7 +42,25 @@ public class WatchStateWatch extends AWatchState {
     @Override
     public void enterState(){
         super.enterState();
-        checkPauseNeeded();
+        if(!checkPauseNeeded()){
+            synchronized (lock) {
+                if (moviePlayer != null && moviePlayer.isAlive())
+                    moviePlayer.interrupt();
+
+                moviePlayer = new Thread(new myThread());
+                moviePlayer.start();
+            }
+        }
+    }
+
+    @Override
+    public void exitState() {
+        super.exitState();
+        synchronized (lock) {
+            if (moviePlayer != null && moviePlayer.isAlive()) {
+                moviePlayer.interrupt();
+            }
+        }
     }
 
     @Override
@@ -47,12 +69,38 @@ public class WatchStateWatch extends AWatchState {
         checkPauseNeeded();
     }
 
-    private void checkPauseNeeded(){
+    private boolean checkPauseNeeded(){
         ADownloadState current=powerStateOnMachine.getCurrentDownloadState();
         if(current==powerStateOnMachine.getDownloadStateRepair() || current==powerStateOnMachine.getDownloadStatePause()){
             powerStateOnMachine.setSelfPause(false);
             powerStateOnMachine.setCurrentWatchState(powerStateOnMachine.getWatchStatePause());
+            return true;
         }
+        return false;
+    }
+
+    public double getTime() {
+        return time;
+    }
+
+    private class myThread implements Runnable{
+
+        @Override
+        public void run() {
+            try {
+                while (powerStateOnMachine.getCurrentWatchState() == powerStateOnMachine.getWatchStateWatch()) {
+                    Thread.sleep(1000);
+                    play(time);
+                    time++;
+                }
+            } catch (InterruptedException e) {
+                //e.printStackTrace();
+            }
+        }
+    }
+
+    private void play(double time) {
+        //playing :)
     }
 
 }
