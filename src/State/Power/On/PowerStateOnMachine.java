@@ -180,7 +180,6 @@ public class PowerStateOnMachine extends APowerComplexState {
 
     public void addPoint(){
         points++;
-        currentAccountTypeState.pointsChanged();
     }
 
     public void removePoint(){

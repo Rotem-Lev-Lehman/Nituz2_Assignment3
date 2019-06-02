@@ -63,7 +63,7 @@ public class DownloadStateSecondCheck extends ADownloadState {
                     }
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
     }
